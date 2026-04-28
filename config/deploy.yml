@@ -1,45 +1,41 @@
-service: gruppo-1-MiniBankAPI
-image: KEKKOSECCI/gruppo-1-MiniBankAPI
+service: gruppo-1-minibankapi
+image: KEKKOSECCI/gruppo-1-minibankapi
 
 servers:
   web:
-    - 1.2.3.4 # <--- SOSTITUISCI CON IP REALE
+    - 89.167.48.93
 
 registry:
   server: docker.io
   username: KEKKOSECCI
-  password:
-    - KAMAL_REGISTRY_PASSWORD  # Aggiungi queste due righe
+  password: KAMAL_REGISTRY_PASSWORD
 
 accessories:
   db:
     image: mariadb:10.11
-    host: 1.2.3.4
+    host: 89.167.48.93
     port: 3306
     env:
-      clear:
-        MYSQL_DATABASE: api_db
-        MYSQL_USER: user_api
-      secret:
-        - MYSQL_ROOT_PASSWORD
-        - MYSQL_PASSWORD
+      MYSQL_DATABASE: api_db
+      MYSQL_USER: user_api
+      MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+      MYSQL_PASSWORD: MYSQL_PASSWORD
     directories:
       - /var/lib/mysql:/var/lib/mysql
 
 env:
   clear:
-    # Kamal concatena nome_servizio-nome_accessorio
-    DB_HOST: gruppo-1-MiniBankAPI-db
+    DB_HOST: db
     DB_NAME: api_db
     DB_USER: user_api
   secret:
-    - DB_PASSWORD
+    - DB_PASS
 
 builder:
   dockerfile: php/Dockerfile.php
-  context: . # Importante per vedere la cartella php/slim/
+  context: .
   arch: amd64
 
 proxy:
-  host: api.tuodominio.it
+  host: 89.167.48.93
   app_port: 80

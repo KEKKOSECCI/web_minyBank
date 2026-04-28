@@ -5,10 +5,10 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 // 1. Funzione per la connessione al database
 function getConnection() {
-    $host = "my_mariadb";
-    $user = "root";
-    $pass = "ciccio";
-    $db   = "scuola";
+    $host =getenv('DB_HOST');
+    $user =getenv('DB_USER');
+    $pass =getenv('DB_PASS');
+    $db   =getenv('DB_NAME');
 
     $mysqli = new mysqli($host, $user, $pass, $db);
 
