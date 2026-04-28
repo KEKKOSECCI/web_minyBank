@@ -1,0 +1,56 @@
+============================================================
+API ENDPOINTS - ESEMPI DI CHIAMATE
+============================================================
+
+NOTE: 
+- Sostituisci {id} con l'ID dell'account (es. 1).
+- Sostituisci {tid} con l'ID della transazione (es. 5).
+- Per le POST/PUT, i dati sono inviati come JSON (-d '{"chiave": "valore"}').
+
+------------------------------------------------------------
+1. ACCOUNTS (Saldo e Conversioni)
+------------------------------------------------------------
+
+[GET] Visualizza Saldo
+Browser: http://localhost:8080/accounts/1/balance
+CURL:    curl -X GET http://localhost:8080/accounts/1/balance
+
+[GET] Converti Saldo in FIAT (es. USD)
+Browser: http://localhost:8080/accounts/1/balance/convert/fiat?to=USD
+CURL:    curl -X GET "http://localhost:8080/accounts/1/balance/convert/fiat?to=USD"
+
+[GET] Converti Saldo in CRYPTO (es. BTC)
+Browser: http://localhost:8080/accounts/1/balance/convert/crypto?to=BTC
+CURL:    curl -X GET "http://localhost:8080/accounts/1/balance/convert/crypto?to=BTC"
+
+------------------------------------------------------------
+2. TRANSACTIONS (Movimenti)
+------------------------------------------------------------
+
+[GET] Lista Movimenti
+Browser: http://localhost:8080/accounts/1/transactions
+CURL:    curl -X GET http://localhost:8080/accounts/1/transactions
+
+[GET] Dettaglio Singolo Movimento
+Browser: http://localhost:8080/accounts/1/transactions/5
+CURL:    curl -X GET http://localhost:8080/accounts/1/transactions/5
+
+[POST] Deposito (Versamento)
+CURL:    curl -X POST http://localhost:8080/accounts/1/deposits \
+              -H "Content-Type: application/json" \
+              -d '{"amount": 100, "description": "Bonifico stipendio"}'
+
+[POST] Prelievo
+CURL:    curl -X POST http://localhost:8080/accounts/1/withdrawals \
+              -H "Content-Type: application/json" \
+              -d '{"amount": 50, "description": "Prelievo ATM"}'
+
+[PUT] Modifica Descrizione Transazione
+CURL:    curl -X PUT http://localhost:8080/accounts/1/transactions/5 \
+              -H "Content-Type: application/json" \
+              -d '{"description": "Descrizione aggiornata"}'
+
+[DELETE] Elimina Transazione (Solo se è l'ultima)
+CURL:    curl -X DELETE http://localhost:8080/accounts/1/transactions/5
+
+============================================================
